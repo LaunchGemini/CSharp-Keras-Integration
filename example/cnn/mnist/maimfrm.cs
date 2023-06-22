@@ -99,4 +99,14 @@ namespace mnist
         private void inputbox_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-                timer.En
+                timer.Enabled = false;
+        }
+        //写字过程
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            g.FillEllipse(Brushes.White, inputbox.PointToClient(Control.MousePosition).X, inputbox.PointToClient(Control.MousePosition).Y, 20, 20);
+            inputbox.Image = bitmap;
+        }
+        #endregion
+    }
+}
