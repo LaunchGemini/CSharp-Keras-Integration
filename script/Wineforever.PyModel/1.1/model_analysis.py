@@ -102,4 +102,136 @@ if(tip=='fr'):
                         data__.append(data___)
                     data_.append(data__)
                 data.append(data_)
-            Serializati
+            Serialization(data, 'Output\\conv_'+str(conv_count) + '_weights.group')
+            print('conv_weights_' + str(conv_count) + ' done!')
+            '''
+            for bias
+            '''
+            data = []
+            len_0 = temp['bias:0'].shape[0]
+            bar = Bar('progress',len_0)
+            for i in range(0,len_0):
+                data.append(temp['bias:0'][i])
+                bar.next()
+            Serialization(data, 'Output\\conv_' + str(conv_count) + '_bias.group')
+            print('conv_bias_' + str(conv_count) + ' done!')
+            conv_count = conv_count + 1
+    print('done!')
+
+if(tip=='cr'):
+
+    path = ''
+
+    tip = input('please enter first name(eg:model_weights):')
+    if(tip==''):
+        tip='model_weights'
+
+    dataset = model[tip]
+    path += tip
+    print('path: %s' % path)
+
+    tip = input('please enter second name(eg:dense_1):')
+    if(tip==''):
+        tip='dense_1'
+
+    dataset = dataset[tip]
+    path += '-->' + tip
+    print('path: %s' % path)
+
+    tip = input('please enter third name(eg:dense_1):')
+    if(tip==''):
+        tip='dense_1'
+
+    dataset = dataset[tip]
+    path += '-->' + tip
+    print('path: %s' % path)
+
+    tip = input('please enter fourth name(eg:bias:0):')
+    if(tip==''):
+        tip='bias:0'
+
+    dataset = dataset[tip]
+    path += '-->' + tip
+    print('path: %s' % path)
+
+    tip = input('is 1 dim,2 dims or more?(eg:1):')
+    if(tip==''):
+        tip='1'
+
+    if(tip=='1'):
+        data = {}
+        tip = input('please enter its length:')
+        len = int(tip)
+        data['bias'] = []
+        bar = Bar('progress',len)
+        name = input('please enter its name:')
+        for i in range(0,len):
+            data['bias'].append(str(dataset[i]))
+            bar.next()
+        save_to_sheet(data, 'Output\\'+name + '.wf')
+        print('done!')
+
+    if(tip=='2'):
+        data = {}
+        tip = input('please enter dim 0 length:')
+        len_0 = int(tip)
+        tip = input('please enter dim 1 length:')
+        len_1 = int(tip)
+        bar = Bar('progress',len_1)
+        name = input('please enter its name:')
+        for i in range(0,len_1):
+            data['kernel_' + str(i)] = []
+            for j in range(0,len_0):
+                data['kernel_' + str(i)].append(str(dataset[j][i]))
+            bar.next()
+        save_to_sheet(data, 'Output\\'+name + '.wf')
+        print('done!')
+
+    if(tip=='3'):
+        data = []
+        tip = input('please enter dim 0 length:')
+        len_0 = int(tip)
+        tip = input('please enter dim 1 length:')
+        len_1 = int(tip)
+        tip = input('please enter dim 2 length:')
+        len_2 = int(tip)
+        bar = Bar('progress',len_0)
+        name = input('please enter its name:')
+        for i in range(0,len_0):
+            data_ = []
+            for j in range(0,len_1):
+                data__ = []
+                for k in range(0,len_2):
+                    data__.append(dataset[i][j][k])
+                data_.append(data__)
+            data.append(data_)
+            bar.next()
+        Serialization(data, 'Output\\'+name + '.group')
+        print('done!')
+
+    if(tip=='4'):
+        data = []
+        tip = input('please enter dim 0 length:')
+        len_0 = int(tip)
+        tip = input('please enter dim 1 length:')
+        len_1 = int(tip)
+        tip = input('please enter dim 2 length:')
+        len_2 = int(tip)
+        tip = input('please enter dim 3 length:')
+        len_3 = int(tip)
+        bar = Bar('progress',len_0)
+        name = input('please enter its name:')
+        for i in range(0,len_0):
+            data_ = []
+            for j in range(0,len_1):
+                data__ = []
+                for k in range(0,len_2):
+                    data___ = []
+                    for l in range(0,len_3):
+                        data___.append(dataset[i][j][k][l])
+                    data__.append(data___)
+                data_.append(data__)
+            data.append(data_)
+            bar.next()
+        Serialization(data, 'Output\\'+name + '.group')
+        print('done!')
